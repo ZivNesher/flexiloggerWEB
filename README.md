@@ -1,43 +1,117 @@
-# 📊 FlexiLogger Web Dashboard
+# 📊 FlexiLogger
 
-**FlexiLogger** is a customizable logging library for Android paired with a powerful Firebase-backed web dashboard that visualizes real-time logs.  
-This repository contains the **web dashboard** portion — built with **React**, **MUI**, and **Recharts** — to help developers and support engineers monitor, filter, and understand app behavior at scale.
-
----
-
-## 🌟 Features
-
-- 📈 **Real-time Pie Charts**: View logs by `Tag`, `User ID`, and `Level`.
-- 🔎 **Firebase Realtime Database Integration**: Pulls the latest 2,000 log entries per app.
-- 🎯 **Filtering Support**: Select specific log levels (DEBUG / INFO / ERROR / ALL).
-- 💡 **Responsive UI**: Built with Material UI and works on desktop and mobile.
-- 🔥 **Easy to Integrate**: Works seamlessly with the FlexiLogger Android SDK.
+**FlexiLogger** is a lightweight, plug-and-play logging solution for Android apps, with a web-based dashboard for real-time visualization and debugging. It combines a flexible Android library and a Firebase-powered dashboard to monitor logs from any app, with visual insights and filtering tools.
 
 ---
 
-## 📂 Project Structure
+## 📱 Android SDK
+
+Import the Android logging library into your app:
 
 ```
-flexilogger-web/
-├── src/
-│   ├── dashboard/
-│   │   └── LogsChart.tsx       # Core pie chart visualizer
-│   ├── firebase.ts             # Firebase config and initialization
-│   ├── App.tsx                 # Root app component
-│   └── index.tsx               # Entry point
-├── public/
-├── package.json
-└── README.md
+implementation 'com.ZivNesher.Flexilogger:flexilogger:1.0.0'
+```
+
+> Hosted at: [github.com/ZivNesher/Flexilogger](https://github.com/ZivNesher/Flexilogger)
+
+Once integrated, you should contact me directly Zivnesher96@gmail.com in order to get you web-dashboard password. then, you can start logging events like this:
+
+```java
+Flexilogger.init(context, new FlexiLoggerConfig.Builder("myAppName").build());
+Flexilogger.setUserId("user_123");
+Flexilogger.setSessionId("session_abc");
+
+Flexilogger.log(context, "Login", "User login failed due to 401", Flexilogger.LogLevel.ERROR);
+```
+
+These logs are sent in real-time to Firebase Realtime Database under:
+
+```
+apps/
+  └── myAppName/
+      └── logs/
+          └── user_123/
+              └── session_abc/
+                  └── log_xxx: {
+                        tag: "Login",
+                        level: "ERROR",
+                        msg: "User login failed...",
+                        ts: 1723487200
+                  }
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## 🖥️ Web Dashboard (this repo)
 
-### 1. Clone the Repository
+This repo contains the **FlexiLogger Web Console** built in React. It allows you to:
+
+- 🔐 Log in by App Name + Password
+- 📊 View Pie Charts of logs:
+  - by **Tag** (e.g. "Auth", "Network")
+  - by **User ID**
+  - by **Level** (INFO, DEBUG, ERROR)
+- 📄 View detailed logs in a searchable table
+- 🔍 Filter logs by level
+
+---
+
+## 🚀 Live Features
+
+### 🔐 Login (`Login.tsx`)
+
+- Enter your app name and password (stored under `apps/{appName}/meta/passwordHash`)
+- Validates access and loads app logs into session
+
+### 📊 Dashboard (`Dashboard.tsx`)
+
+- Combines `<LogsChart />` and `<LogsTable />`
+- Includes level filter and logout button
+
+### 🥧 LogsChart (`LogsChart.tsx`)
+
+- Recharts-based pie charts grouped by:
+  - Tag (`v.tag`)
+  - User ID (Firebase key: `user_123`)
+  - Log Level (`v.level`)
+- Fully responsive using MUI and Flexbox
+
+### 📋 LogsTable (`LogsTable.tsx`)
+
+- Uses `@mui/x-data-grid`
+- Shows columns: Timestamp, Level, Tag, Message, User
+- Automatically scrolls, formats timestamps, color-codes log levels
+- Shows latest 500 logs per app
+- Filterable by level
+
+---
+
+## 🧠 Firebase Realtime Database Structure
+
+```
+apps/
+  └── myApp/
+      ├── meta/
+      │   └── passwordHash: "secret123"
+      └── logs/
+          └── user_123/
+              └── session_xyz/
+                  └── log_abc123: {
+                        tag: "network",
+                        level: "ERROR",
+                        msg: "Timeout occurred",
+                        ts: 1723459123
+                  }
+```
+
+---
+
+## 💻 Setup & Run (Web Dashboard)
+
+### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/your-username/flexilogger-web.git
+git clone https://github.com/ZivNesher/flexilogger-web.git
 cd flexilogger-web
 ```
 
@@ -49,7 +123,7 @@ npm install
 
 ### 3. Configure Firebase
 
-Edit `src/firebase.ts` and replace with your project credentials:
+Update `src/firebase.ts` with your Firebase app config:
 
 ```ts
 // src/firebase.ts
@@ -70,65 +144,63 @@ const app = initializeApp(firebaseConfig);
 export const db = getDatabase(app);
 ```
 
-### 4. Run Locally
+### 4. Start the Web App
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Then open: [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## 🧪 Firebase Database Structure
+## 🧩 Tech Stack
 
-Your Firebase Realtime Database should follow this structure:
-
-```
-apps/
-  └── demoApp/
-      └── logs/
-          └── user_1234/
-              └── session_xyz/
-                  └── log_abc123: {
-                        tag: "network",
-                        level: "ERROR",
-                        msg: "Timeout",
-                        ts: 1723459123
-                  }
-```
-
-- `tag`: category of the log
-- `level`: DEBUG / INFO / ERROR
-- `ts`: Unix timestamp (seconds)
+- ⚛️ React + TypeScript
+- 🎨 Material UI (MUI)
+- 📊 Recharts
+- 📚 Firebase Realtime Database
+- 🧪 MUI X DataGrid
+- ⚡️ Vite
 
 ---
 
-## 🧩 Built With
+## ✨ Screenshots
 
-- ⚛️ [React](https://reactjs.org/)
-- 🎨 [Material UI (MUI)](https://mui.com/)
-- 📊 [Recharts](https://recharts.org/)
-- 🔥 [Firebase Realtime Database](https://firebase.google.com/products/realtime-database)
-- ⚡️ [Vite](https://vitejs.dev/)
-
----
-
-## 👨‍💻 Author
-
-**Ziv Nesher**  
-[GitHub Profile](https://github.com/zivnesher)
+> _Coming soon..._ (add GIFs of chart & table interaction if desired)
 
 ---
 
 ## 📜 License
 
-This project is licensed under the [MIT License](LICENSE).
+MIT License © 2025 Ziv Nesher
 
 ---
 
-## 🚀 Coming Soon
+## 🛣️ Roadmap
 
-- 🔐 Authentication & Role-based access
-- 📁 Log download & export
-- 📬 Slack & email alerts
+- [ ] 🔐 Add Firebase Authentication
+- [ ] 📁 Export logs to CSV
+- [ ] 📬 Slack or Email log alerts
+- [ ] 📱 Admin mobile dashboard
+
+---
+
+## 🙌 Acknowledgments
+
+- Built as part of a personal logging utility project
+- Inspired by the need to debug real-time logs from Android devices during QA and production
+
+##Screenshots
+
+###Website:
+<img width="1276" height="826" alt="Screenshot 2025-07-18 at 16 51 52" src="https://github.com/user-attachments/assets/e6946f2e-c570-4d76-a6a2-e583dd2e8a87" />
+<img width="1276" height="829" alt="Screenshot 2025-07-18 at 17 01 14" src="https://github.com/user-attachments/assets/71820c65-d6ea-4659-8ed8-4dbf4fa894d3" />
+
+###demoApp:
+https://github.com/user-attachments/assets/38dbef35-17a0-4684-b3ea-f56a061292a0
+
+
+
+
+
