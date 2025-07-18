@@ -111,8 +111,8 @@ apps/
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/ZivNesher/flexilogger-web.git
-cd flexilogger-web
+git clone https://github.com/ZivNesher/flexiloggerweb.git
+cd flexiloggerweb
 ```
 
 ### 2. Install Dependencies
