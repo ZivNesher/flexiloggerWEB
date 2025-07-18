@@ -167,7 +167,13 @@ Then open: [http://localhost:5173](http://localhost:5173)
 
 ## ✨ Screenshots
 
-> _Coming soon..._ (add GIFs of chart & table interaction if desired)
+###Website:
+<img width="1276" height="826" alt="Screenshot 2025-07-18 at 16 51 52" src="https://github.com/user-attachments/assets/e6946f2e-c570-4d76-a6a2-e583dd2e8a87" />
+<img width="1276" height="829" alt="Screenshot 2025-07-18 at 17 01 14" src="https://github.com/user-attachments/assets/71820c65-d6ea-4659-8ed8-4dbf4fa894d3" />
+
+###demoApp:
+https://github.com/user-attachments/assets/38dbef35-17a0-4684-b3ea-f56a061292a0
+
 
 ---
 
@@ -190,15 +196,6 @@ MIT License © 2025 Ziv Nesher
 
 - Built as part of a personal logging utility project
 - Inspired by the need to debug real-time logs from Android devices during QA and production
-
-##Screenshots
-
-###Website:
-<img width="1276" height="826" alt="Screenshot 2025-07-18 at 16 51 52" src="https://github.com/user-attachments/assets/e6946f2e-c570-4d76-a6a2-e583dd2e8a87" />
-<img width="1276" height="829" alt="Screenshot 2025-07-18 at 17 01 14" src="https://github.com/user-attachments/assets/71820c65-d6ea-4659-8ed8-4dbf4fa894d3" />
-
-###demoApp:
-https://github.com/user-attachments/assets/38dbef35-17a0-4684-b3ea-f56a061292a0
 
 
 
